@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoiseFilter
+public class SimpleNoiseFilter : INoiseFilter
 {
+    NoiseSettings.SimpleNoiseSettings settings;
     Noise noise = new Noise();
-    NoiseSettings settings;
 
-    public NoiseFilter(NoiseSettings settings)
+    public SimpleNoiseFilter(NoiseSettings.SimpleNoiseSettings settings)
     {
         this.settings = settings;
     }
@@ -23,7 +23,7 @@ public class NoiseFilter
             float v = noise.Evaluate(point * frequency + settings.centre);
             noiseValue += (v + 1) * .5f * amplitude;
             frequency *= settings.roughness;
-            amplitude *= settings.presistance;
+            amplitude *= settings.persistence;
         }
         noiseValue = Mathf.Max(0, noiseValue - settings.minValue);
 
